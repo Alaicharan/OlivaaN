@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ᴿᵉˢQᶠˡʸ | Dual-Mission Drone System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        }
+        .pulse-ring {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-gray-800 p-4 border-b border-gray-700 shadow-lg">
+            <div class="container mx-auto flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <i class="fas fa-helicopter text-green-400 text-2xl"></i>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full pulse-ring"></div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">𝐎𝐥𝐢𝐯𝐚𝐚𝐍</h1>
+                        <p class="text-sm text-gray-400">Dual-Mission Drone System</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2 text-green-400">
+                        <i class="fas fa-wifi"></i>
+                        <span class="text-sm">Connected</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 text-yellow-400">
+                        <i class="fas fa-battery-three-quarters"></i>
+                        <span class="text-sm">85%</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 text-blue-400">
+                        <i class="fas fa-satellite"></i>
+                        <span class="text-sm">4/5</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-purple-400">
+                        <i class="fas fa-brain"></i>
+                        <span class="text-sm">AI Active</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar Navigation -->
+            <nav class="w-20 bg-gray-800 flex flex-col items-center py-6 space-y-8 shadow-xl">
+                <button onclick="switchTab('dashboard')" class="nav-tab p-3 rounded-xl bg-green-500 text-white shadow-lg transform transition hover:scale-110" data-tab="dashboard">
+                    <i class="fas fa-home text-xl"></i>
+                    <span class="text-xs mt-1">Dashboard</span>
+                </button>
+                
+                <button onclick="switchTab('medical')" class="nav-tab p-3 rounded-xl bg-gray-700 text-gray-300 hover:bg-red-500 hover:text-white transition" data-tab="medical">
+                    <i class="fas fa-heartbeat text-xl"></i>
+                    <span class="text-xs mt-1">Medical</span>
+                </button>
+                
+                <button onclick="switchTab('rescue')" class="nav-tab p-3 rounded-xl bg-gray-700 text-gray-300 hover:bg-blue-500 hover:text-white transition" data-tab="rescue">
+                    <i class="fas fa-search text-xl"></i>
+                    <span class="text-xs mt-1">Rescue</span>
+                </button>
+                
+                <button onclick="switchTab('live')" class="nav-tab p-3 rounded-xl bg-gray-700 text-gray-300 hover:bg-purple-500 hover:text-white transition" data-tab="live">
+                    <i class="fas fa-video text-xl"></i>
+                    <span class="text-xs mt-1">Live Feed</span>
+                </button>
+                
+                <button onclick="switchTab('settings')" class="nav-tab p-3 rounded-xl bg-gray-700 text-gray-300 hover:bg-yellow-500 hover:text-white transition" data-tab="settings">
+                    <i class="fas fa-cogs text-xl"></i>
+                    <span class="text-xs mt-1">Settings</span>
+                </button>
+            </nav>
+
+            <!-- Content Area -->
+            <main class="flex-1 p-6 overflow-y-auto gradient-bg">
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold mb-2">Mission Control Dashboard</h2>
+                        <p class="text-gray-400">Monitor and control your dual-mission drone operations</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Telemetry Card -->
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                <i class="fas fa-satellite-dish text-blue-400 mr-2"></i>
+                                Live Telemetry
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-mountain text-blue-300 mr-3"></i>
+                                        <span>Altitude</span>
+                                    </div>
+                                    <span class="font-mono text-green-400">125 m</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-tachometer-alt text-purple-300 mr-3"></i>
+                                        <span>Speed</span>
+                                    </div>
+                                    <span class="font-mono text-blue-400">45 km/h</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-route text-yellow-300 mr-3"></i>
+                                        <span>Distance</span>
+                                    </div>
+                                    <span class="font-mono text-yellow-400">2.3 km</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-map-marker-alt text-red-300 mr-3"></i>
+                                        <span>Coordinates</span>
+                                    </div>
+                                    <span class="font-mono text-sm text-purple-400">12.9716° N, 77.5946° E</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Status -->
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                <i class="fas fa-microchip text-green-400 mr-2"></i>
+                                System Status
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <span>GPS</span>
+                                    <span class="px-3 py-1 bg-green-500 rounded-full text-xs font-medium">Strong</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <span>Camera</span>
+                                    <span class="px-3 py-1 bg-green-500 rounded-full text-xs font-medium">Active</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <span>LiDAR</span>
+                                    <span class="px-3 py-1 bg-green-500 rounded-full text-xs font-medium">Operational</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-750 rounded-lg">
+                                    <span>Communication</span>
+                                    <span class="px-3 py-1 bg-green-500 rounded-full text-xs font-medium">Stable</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+                                Quick Actions
+                            </h3>
+                            <div class="space-y-4">
+                                <button class="w-full py-3 bg-green-500 hover:bg-green-600 rounded-xl flex items-center justify-center space-x-2 transition shadow-lg">
+                                    <i class="fas fa-play"></i>
+                                    <span class="font-semibold">Start Mission</span>
+                                </button>
+                                
+                                <button class="w-full py-3 bg-blue-500 hover:bg-blue-600 rounded-xl flex items-center justify-center space-x-2 transition shadow-lg">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span class="font-semibold">Set Waypoint</span>
+                                </button>
+                                
+                                <button class="w-full py-3 bg-purple-500 hover:bg-purple-600 rounded-xl flex items-center justify-center space-x-2 transition shadow-lg">
+                                    <i class="fas fa-camera"></i>
+                                    <span class="font-semibold">Capture Image</span>
+                                </button>
+
+                                <button class="w-full py-3 bg-red-500 hover:bg-red-600 rounded-xl flex items-center justify-center space-x-2 transition shadow-lg">
+                                    <i class="fas fa-home"></i>
+                                    <span class="font-semibold">Return to Base</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Missions -->
+                    <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fas fa-tasks text-indigo-400 mr-2"></i>
+                            Recent Missions
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-750 p-4 rounded-xl border-l-4 border-red-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-heartbeat text-red-400 mr-2"></i>
+                                        <span class="font-medium">Blood Delivery</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-500 rounded text-xs">Completed</span>
+                                </div>
+                                <p class="text-sm text-gray-400">City General Hospital</p>
+                                <p class="text-xs text-gray-500 mt-2">10:30 AM • 2.1 km</p>
+                            </div>
+                            
+                            <div class="bg-gray-750 p-4 rounded-xl border-l-4 border-blue-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-search text-blue-400 mr-2"></i>
+                                        <span class="font-medium">Flood Search</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-yellow-500 rounded text-xs">In Progress</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Riverbank Area</p>
+                                <p class="text-xs text-gray-500 mt-2">11:15 AM • 3.7 km</p>
+                            </div>
+                            
+                            <div class="bg-gray-750 p-4 rounded-xl border-l-4 border-green-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-syringe text-green-400 mr-2"></i>
+                                        <span class="font-medium">Vaccine Transport</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-gray-500 rounded text-xs">Scheduled</span>
+                                </div>
+                                <p class="text-sm text-gray-400">Rural Health Center</p>
+                                <p class="text-xs text-gray-500 mt-2">02:00 PM • 5.2 km</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Missions Tab -->
+                <div id="medical" class="tab-content">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-heartbeat text-red-400 mr-3"></i>
+                            Medical Delivery Missions
+                        </h2>
+                        <p class="text-gray-400">Manage emergency medical supply deliveries</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-xl font-semibold mb-6">New Medical Delivery</h3>
+                            
+                            <div class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Payload Type</label>
+                                    <div class="relative">
+                                        <select class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 appearance-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                            <option>Blood Units</option>
+                                            <option>Vaccines</option>
+                                            <option>Medicines</option>
+                                            <option>Anti-venom</option>
+                                            <option>First Aid Kit</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Destination</label>
+                                    <input type="text" placeholder="Enter hospital or coordinates" class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-yellow-600">
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-400 mb-2">Temperature</label>
+                                        <div class="flex items-center space-x-2 bg-gray-750 px-4 py-3 rounded-xl border border-gray-600">
+                                            <i class="fas fa-thermometer-half text-blue-400"></i>
+                                            <span>2°C - 8°C</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-400 mb-2">Weight (kg)</label>
+                                        <input type="text" placeholder="0.0" class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-yellow-600">
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-red-500 hover:bg-red-600 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition shadow-lg mt-4">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <span>Launch Medical Mission</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-xl font-semibold mb-6">Active Medical Missions</h3>
+                            
+                            <div class="bg-gray-750 rounded-xl p-5 border border-gray-600 mb-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-heartbeat text-red-400 text-xl"></i>
+                                        <span class="font-medium text-lg">Emergency Blood Delivery</span>
+                                    </div>
+                                    <span class="bg-yellow-500 px-3 py-1 rounded-full text-xs font-semibold">In Progress</span>
+                                </div>
+                                <div class="space-y-3 text-gray-300">
+                                    <div class="flex justify-between">
+                                        <span>Destination:</span>
+                                        <span>City General Hospital</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>ETA:</span>
+                                        <span class="text-green-400 font-semibold">8 minutes</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Payload:</span>
+                                        <span>O+ Blood (2 units)</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Temperature:</span>
+                                        <span class="text-blue-400">4.2°C</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-600 flex space-x-3">
+                                    <button class="flex-1 bg-blue-500 hover:bg-blue-600 py-2 rounded-lg text-sm transition">
+                                        View Details
+                                    </button>
+                                    <button class="flex-1 bg-gray-600 hover:bg-gray-700 py-2 rounded-lg text-sm transition">
+                                        Cancel Mission
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <h4 class="font-semibold mb-3">Medical Mission Statistics</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-gray-750 p-4 rounded-xl text-center">
+                                    <div class="text-2xl font-bold text-green-400">24</div>
+                                    <div class="text-xs text-gray-400">Completed</div>
+                                </div>
+                                <div class="bg-gray-750 p-4 rounded-xl text-center">
+                                    <div class="text-2xl font-bold text-blue-400">1.7</div>
+                                    <div class="text-xs text-gray-400">Avg Time (hrs)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search & Rescue Tab -->
+                <div id="rescue" class="tab-content">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-search text-blue-400 mr-3"></i>
+                            Search & Rescue Operations
+                        </h2>
+                        <p class="text-gray-400">Coordinate life-saving search and rescue missions</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-xl font-semibold mb-6">New Search Operation</h3>
+                            
+                            <div class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Search Type</label>
+                                    <div class="relative">
+                                        <select class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option>Flood Rescue</option>
+                                            <option>Missing Person</option>
+                                            <option>Disaster Assessment</option>
+                                            <option>Wilderness Search</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Search Area</label>
+                                    <input type="text" placeholder="Enter coordinates or area" class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-yellow-600">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Search Pattern</label>
+                                    <div class="relative">
+                                        <select class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option>Expanding Square</option>
+                                            <option>Lawnmower Pattern</option>
+                                            <option>Spiral Search</option>
+                                            <option>Custom Waypoints</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-gray-750 rounded-xl border border-gray-600">
+                                    <input type="checkbox" id="thermal" class="rounded text-blue-500 focus:ring-blue-500" checked>
+                                    <label for="thermal" class="text-gray-400">Enable Thermal Imaging</label>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-gray-750 rounded-xl border border-gray-600">
+                                    <input type="checkbox" id="ai" class="rounded text-blue-500 focus:ring-blue-500" checked>
+                                    <label for="ai" class="text-gray-400">Enable AI Detection</label>
+                                </div>
+                                
+                                <button class="w-full bg-blue-500 hover:bg-blue-600 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition shadow-lg mt-2">
+                                    <i class="fas fa-search"></i>
+                                    <span>Start Search Operation</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-xl font-semibold mb-6">AI Detection Results</h3>
+                            
+                            <div class="bg-gray-750 rounded-xl p-5 border border-green-600 mb-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-user text-green-400 text-xl"></i>
+                                        <span class="font-medium text-lg">Person Detected</span>
+                                    </div>
+                                    <span class="bg-green-500 px-3 py-1 rounded-full text-xs font-semibold">High Confidence (89%)</span>
+                                </div>
+                                <div class="space-y-3 text-gray-300">
+                                    <div class="flex justify-between">
+                                        <span>Coordinates:</span>
+                                        <span class="font-mono">12.9716° N, 77.5946° E</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Temperature:</span>
+                                        <span class="text-red-400 font-semibold">37.2°C</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Detection Time:</span>
+                                        <span>11:23:45</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-600 flex space-x-3">
+                                    <button id="deploy-supplies-btn" class="flex-1 bg-green-500 hover:bg-green-600 py-2 rounded-lg text-sm transition">
+                                        Deploy Supplies
+                                    </button>
+                                    <button class="flex-1 bg-blue-500 hover:bg-blue-600 py-2 rounded-lg text-sm transition">
+                                        Mark Location
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <h4 class="font-semibold mb-3">Rescue Mission Statistics</h4>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-gray-750 p-4 rounded-xl text-center">
+                                    <div class="text-2xl font-bold text-green-400">7</div>
+                                    <div class="text-xs text-gray-400">Lives Saved</div>
+                                </div>
+                                <div class="bg-gray-750 p-4 rounded-xl text-center">
+                                    <div class="text-2xl font-bold text-blue-400">42</div>
+                                    <div class="text-xs text-gray-400">Missions</div>
+                                </div>
+                                <div class="bg-gray-750 p-4 rounded-xl text-center">
+                                    <div class="text-2xl font-bold text-yellow-400">94%</div>
+                                    <div class="text-xs text-gray-400">Success Rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Feed Tab -->
+                <div id="live" class="tab-content">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-video text-purple-400 mr-3"></i>
+                            Live Camera Feed
+                        </h2>
+                        <p class="text-gray-400">Real-time visual monitoring and AI analysis</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div id="live-main" class="bg-black rounded-2xl aspect-video flex items-center justify-center relative overflow-hidden border border-gray-700 shadow-2xl">
+                                <video id="live-video" autoplay playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+                                <canvas id="snapshot-canvas" class="hidden"></canvas>
+                                <div id="live-overlay" class="text-center z-10 pointer-events-none">
+                                    <i class="fas fa-camera text-gray-600 text-5xl mb-4"></i>
+                                    <p class="text-gray-500 text-xl">Allow camera access to start</p>
+                                    <p class="text-sm text-gray-600 mt-2">RGB Camera - 1080p @ 30fps</p>
+                                </div>
+                                <div class="absolute top-4 left-4 bg-red-500 px-3 py-1 rounded-full text-xs font-semibold">
+                                    LIVE
+                                </div>
+                                <div class="absolute top-4 right-4 flex space-x-2">
+                                    <div class="bg-green-500 w-3 h-3 rounded-full"></div>
+                                    <div class="bg-gray-600 w-3 h-3 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div id="thermal-view" class="bg-black rounded-xl aspect-video flex items-center justify-center border border-gray-700">
+                                    <div class="text-center">
+                                        <i class="fas fa-fire text-red-400 text-2xl mb-2"></i>
+                                        <p class="text-xs text-gray-500">Thermal View</p>
+                                    </div>
+                                </div>
+                                <div id="map-view" class="bg-black rounded-xl aspect-video flex items-center justify-center border border-gray-700">
+                                    <div class="text-center">
+                                        <i class="fas fa-map text-blue-400 text-2xl mb-2"></i>
+                                        <p class="text-xs text-gray-500">Map Overlay</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                                <h3 class="text-lg font-semibold mb-4">Camera Controls</h3>
+                                
+                                <div class="space-y-3">
+                                    <button onclick="switchCamera('rgb')" class="w-full bg-gray-750 hover:bg-gray-700 py-3 rounded-xl flex items-center justify-center space-x-2 transition border border-gray-600">
+                                        <i class="fas fa-camera"></i>
+                                        <span>Switch to RGB Camera</span>
+                                    </button>
+                                    <button onclick="switchCamera('thermal')" class="w-full bg-gray-750 hover:bg-gray-700 py-3 rounded-xl flex items-center justify-center space-x-2 transition border border-gray-600">
+                                        <i class="fas fa-fire"></i>
+                                        <span>Switch to Thermal Camera</span>
+                                    </button>
+                                    <button onclick="takeSnapshot()" class="w-full bg-gray-750 hover:bg-gray-700 py-3 rounded-xl flex items-center justify-center space-x-2 transition border border-gray-600">
+                                        <i class="fas fa-image"></i>
+                                        <span>Take Snapshot</span>
+                                    </button>
+                                    <button id="record-btn" onclick="toggleRecording()" class="w-full bg-purple-500 hover:bg-purple-600 py-3 rounded-xl flex items-center justify-center space-x-2 transition">
+                                        <i class="fas fa-record-vinyl"></i>
+                                        <span>Start Recording</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                                <h3 class="text-lg font-semibold mb-4">AI Detection Overlay</h3>
+                                
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-green-500 px-3 py-1 rounded-full text-xs flex items-center">
+                                        <i class="fas fa-user mr-1"></i>
+                                        Person
+                                    </span>
+                                    <span class="bg-blue-500 px-3 py-1 rounded-full text-xs flex items-center">
+                                        <i class="fas fa-car mr-1"></i>
+                                        Vehicle
+                                    </span>
+                                    <span class="bg-yellow-500 px-3 py-1 rounded-full text-xs flex items-center">
+                                        <i class="fas fa-building mr-1"></i>
+                                        Building
+                                    </span>
+                                    <span class="bg-red-500 px-3 py-1 rounded-full text-xs flex items-center">
+                                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                                        Obstacle
+                                    </span>
+                                </div>
+                                
+                                <div class="mt-4 space-y-3">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-400">Detection Confidence</span>
+                                        <span class="text-green-400">75%</span>
+                                    </div>
+                                    <input type="range" min="50" max="95" value="75" class="w-full">
+                                    <div class="flex justify-between text-xs text-gray-400">
+                                        <span>50%</span>
+                                        <span>95%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settings" class="tab-content">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-cogs text-yellow-400 mr-3"></i>
+                            System Settings
+                        </h2>
+                        <p class="text-gray-400">Configure your drone and AI parameters</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-xl font-semibold mb-6">Drone Configuration</h3>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-3">Maximum Altitude</label>
+                                    <input type="range" min="50" max="500" value="120" class="w-full">
+                                    <div class="flex justify-between text-xs text-gray-400 mt-1">
+                                        <span>50m</span>
+                                        <span>120m</span>
+                                        <span>500m</span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Return-to-Home Altitude</label>
+                                    <input type="number" placeholder="e.g. 60" value="60" class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent placeholder-yellow-600">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Geofence Radius (m)</label>
+                                    <input type="number" placeholder="e.g. 5000" value="5000" class="w-full bg-yellow-200 text-gray-900 border border-yellow-400 rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent placeholder-yellow-600">
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-gray-750 rounded-xl border border-gray-600">
+                                    <span class="text-gray-400">Emergency Return on Low Battery</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-700 peer-focus:ring-4 peer-focus:ring-yellow-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-700">
+                            <h3 class="text-xl font-semibold mb-6">AI Model Settings</h3>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-3">Detection Confidence</label>
+                                    <input type="range" min="50" max="95" value="75" class="w-full">
+                                    <div class="flex justify-between text-xs text-gray-400 mt-1">
+                                        <span>50%</span>
+                                        <span>75%</span>
+                                        <span>95%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-gray-750 rounded-xl border border-gray-600">
+                                    <span class="text-gray-400">Medical Mission Mode</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-700 peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(function(tab){ tab.classList.remove('active'); });
+            var target = document.getElementById(tabName); if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-tab').forEach(function(btn){
+                btn.classList.remove('bg-green-500','bg-red-500','bg-blue-500','bg-purple-500','bg-yellow-500');
+                btn.classList.add('bg-gray-700');
+            });
+            var colorMap = { dashboard:'green', medical:'red', rescue:'blue', live:'purple', settings:'yellow' };
+            var activeBtn = document.querySelector('[data-tab="' + tabName + '"]');
+            if (activeBtn) { activeBtn.classList.remove('bg-gray-700'); activeBtn.classList.add('bg-' + (colorMap[tabName]||'gray') + '-500'); }
+
+            // Start/stop camera when switching tabs
+            if (tabName === 'live') {
+                startCamera();
+            } else {
+                stopCamera();
+            }
+        }
+
+        document.addEventListener('click', function(e){
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            var label = btn.textContent.trim();
+            if (label === 'Start Mission') alert('Mission started (demo).');
+            if (label === 'Set Waypoint') alert('Waypoint set (demo).');
+            if (label === 'Capture Image') alert('Image captured (demo).');
+            if (label === 'Return to Base') alert('Returning to base (demo).');
+        });
+
+        // Deploy Supplies modal
+        (function(){
+            var modalHtml = '\n<div id="deploy-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50">\n  <div class="max-w-md mx-auto mt-24 bg-gray-800 border border-gray-700 rounded-2xl p-6 shadow-2xl">\n    <h3 class="text-lg font-semibold mb-4 flex items-center"><i class="fas fa-parachute-box text-green-400 mr-2"></i>Deploy Supplies</h3>\n    <div class="space-y-4">\n      <div>\n        <label class="block text-sm text-gray-400 mb-1">Package Type</label>\n        <select id="deploy-type" class="w-full bg-gray-750 border border-gray-600 rounded-xl px-4 py-3">\n          <option>First Aid Kit</option>\n          <option>Water & Food</option>\n          <option>Blankets</option>\n          <option>Signal Beacon</option>\n        </select>\n      </div>\n      <div>\n        <label class="block text-sm text-gray-400 mb-1">Quantity</label>\n        <input id="deploy-qty" type="number" min="1" value="1" class="w-full bg-gray-750 border border-gray-600 rounded-xl px-4 py-3" />\n      </div>\n      <div>\n        <label class="block text-sm text-gray-400 mb-1">Drop Note (optional)</label>\n        <input id="deploy-note" type="text" placeholder="Short message" class="w-full bg-gray-750 border border-gray-600 rounded-xl px-4 py-3 placeholder-gray-300" />\n      </div>\n    </div>\n    <div class="flex justify-end space-x-3 mt-6">\n      <button id="deploy-cancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg">Cancel</button>\n      <button id="deploy-confirm" class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg">Deploy</button>\n    </div>\n  </div>\n</div>';
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            var modal = document.getElementById('deploy-modal');
+            document.addEventListener('click', function(e){
+                if (e.target && e.target.id === 'deploy-supplies-btn') {
+                    modal.classList.remove('hidden');
+                }
+                if (e.target && (e.target.id === 'deploy-cancel' || e.target.id === 'deploy-modal')) {
+                    modal.classList.add('hidden');
+                }
+                if (e.target && e.target.id === 'deploy-confirm') {
+                    var type = document.getElementById('deploy-type').value;
+                    var qty = document.getElementById('deploy-qty').value;
+                    modal.classList.add('hidden');
+                    alert('Deploying ' + qty + ' × ' + type + ' (demo).');
+                }
+            });
+        })();
+
+        // Live feed controls with camera
+        var currentView = 'rgb';
+        var mediaStream = null;
+        var mediaRecorder = null;
+        var recordedChunks = [];
+
+        async function startCamera(){
+            try {
+                if (mediaStream) return; // already running
+                mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                var video = document.getElementById('live-video');
+                if (video) {
+                    video.srcObject = mediaStream;
+                    document.getElementById('live-overlay')?.classList.add('hidden');
+                }
+            } catch (err) {
+                alert('Camera access denied or unavailable: ' + err.message);
+            }
+        }
+        function stopCamera(){
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(function(t){ t.stop(); });
+                mediaStream = null;
+                document.getElementById('live-overlay')?.classList.remove('hidden');
+            }
+        }
+        function switchCamera(view){
+            currentView = view;
+            var live = document.getElementById('live-main');
+            if (!live) return;
+            if (view === 'thermal') {
+                live.style.filter = 'grayscale(1) contrast(1.3) brightness(1.1)';
+            } else {
+                live.style.filter = '';
+            }
+        }
+        function takeSnapshot(){
+            var video = document.getElementById('live-video');
+            var canvas = document.getElementById('snapshot-canvas');
+            if (!video || !canvas) return;
+            canvas.width = video.videoWidth || 1280;
+            canvas.height = video.videoHeight || 720;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            if (currentView === 'thermal') {
+                ctx.globalCompositeOperation = 'saturation';
+                ctx.fillStyle = 'hsl(0,0%,50%)';
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL('image/png');
+            a.download = 'snapshot.png';
+            a.click();
+        }
+        var isRecording = false;
+        function toggleRecording(){
+            var btn = document.getElementById('record-btn');
+            var video = document.getElementById('live-video');
+            if (!btn || !video) return;
+            if (!isRecording) {
+                if (!mediaStream) { startCamera().then(startRecording).catch(function(){}); }
+                else { startRecording(); }
+            } else {
+                stopRecording();
+            }
+        }
+        function startRecording(){
+            if (!mediaStream) return;
+            recordedChunks = [];
+            var options = { mimeType: 'video/webm; codecs=vp9' };
+            try { mediaRecorder = new MediaRecorder(mediaStream, options); }
+            catch(e){ mediaRecorder = new MediaRecorder(mediaStream); }
+            mediaRecorder.ondataavailable = function(e){ if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
+            mediaRecorder.onstop = function(){
+                var blob = new Blob(recordedChunks, { type: 'video/webm' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a'); a.href = url; a.download = 'recording.webm'; a.click();
+                URL.revokeObjectURL(url);
+            };
+            mediaRecorder.start(1000);
+            isRecording = true;
+            var btn = document.getElementById('record-btn');
+            btn.querySelector('span').textContent = 'Stop Recording';
+            btn.classList.remove('bg-purple-500');
+            btn.classList.add('bg-red-600');
+        }
+        function stopRecording(){
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+            }
+            isRecording = false;
+            var btn = document.getElementById('record-btn');
+            btn.querySelector('span').textContent = 'Start Recording';
+            btn.classList.add('bg-purple-500');
+            btn.classList.remove('bg-red-600');
+        }
+        </script>
+    </div>
+</body>
+</html>
